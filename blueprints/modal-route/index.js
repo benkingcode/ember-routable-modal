@@ -85,8 +85,6 @@ module.exports = {
             options = {};
         }
 
-        options.identifier = 'modalRoute';
-
         updateRouter.call(this, 'add', options);
     },
 
