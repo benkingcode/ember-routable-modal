@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "An ember-cli addon for implementing URL-first modals.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "modal",
+    "modals",
+    "dialog"
   ],
   "license": "MIT",
   "author": "Ben King <ben@designbybenking.co.uk>",
