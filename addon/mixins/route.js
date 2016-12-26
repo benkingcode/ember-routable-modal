@@ -23,13 +23,22 @@ export default Ember.Mixin.create({
         });
     },
     beforeModel(transition) {
+        const initial = transition.isCausedByInitialTransition || typeof(transition.isCausedByInitialTransition) === "undefined";
+
+        if (initial) {
+            const handlerInfos = transition.handlerInfos;
+            const parentRoute = handlerInfos[handlerInfos.length - 2].name;
+
+            this.intermediateTransitionTo(parentRoute);
+        }
+
         this.set('current._paramsCache', transition.params);
+        this.get('current').set('routeName', this.routeName);
     },
     afterModel(model, transition) {
         this._super(...arguments);
 
         const initial = transition.isCausedByInitialTransition || typeof(transition.isCausedByInitialTransition) === "undefined";
-        const routeName = this.routeName;
 
         if (!initial) {
             const url = getURL(this.get('routing'), transition);
@@ -47,12 +56,35 @@ export default Ember.Mixin.create({
 
             transition.router.updateURL(url);
         }
-
-        this.get('current').set('routeName', routeName);
     },
     actions: {
         closeModal() {
             return true;
+        },
+        loading(transition, originRoute) {
+            const templateName = `${originRoute.routeName}-loading`;
+
+            const oldTemplateName = this.templateName;
+            const oldControllerName = this.controllerName;
+
+            this.templateName = templateName;
+            this.controllerName = 'routableModalLoading';
+
+            this.enter();
+            this.setup();
+
+            if (!this.connections) {
+                this.connections = [];
+            }
+
+            if (!Ember.getOwner(this).lookup('route:application').connections) {
+                Ember.getOwner(this).lookup('route:application').connections = [];
+            }
+
+            Ember.getOwner(this).lookup('route:application').connections = Ember.getOwner(this).lookup('route:application').connections.concat(this.connections);
+
+            this.templateName = oldTemplateName;
+            this.controllerName = oldControllerName;
         }
     }
 });
