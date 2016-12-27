@@ -6,7 +6,7 @@ var chalk       = require('chalk');
 var EmberRouterGenerator = require('ember-router-generator');
 
 module.exports = {
-    description: 'Generates a modal route and registers it with the router.',
+    description: 'Generates a modal route and a template, and registers the route with the router.',
 
     availableOptions: [
         {
@@ -27,10 +27,18 @@ module.exports = {
 
     fileMapTokens: function() {
         return {
-            __routepath__: function(options) {
+            __name__: function (options) {
                 if (options.pod) {
+                    return 'route';
+                }
+
+                return options.dasherizedModuleName;
+            },
+            __path__: function(options) {
+                if (options.pod && options.hasPathToken) {
                     return path.join(options.podPath, options.dasherizedModuleName);
                 }
+
                 return 'routes';
             },
             __templatepath__: function(options) {
@@ -81,20 +89,10 @@ module.exports = {
     },
 
     afterInstall: function(options) {
-        if (!options) {
-            options = {};
-        }
-
         updateRouter.call(this, 'add', options);
     },
 
     afterUninstall: function(options) {
-        if (!options) {
-            options = {};
-        }
-
-        options.identifier = 'modalRoute';
-
         updateRouter.call(this, 'remove', options);
     }
 };
