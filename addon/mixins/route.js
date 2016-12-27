@@ -1,9 +1,12 @@
 import Ember from 'ember';
 
 function getURL(routing, transition) {
-    const params = Object.values(transition.params).filter(param => {
-      return Object.values(param).length;
-    });
+    let params = [];
+    if (transition.params) {
+        params = Object.values(transition.params).filter(param => {
+          return Object.values(param).length;
+        });
+    }
 
     return routing.generateURL(transition.targetName, params, transition.queryParams);
 }
