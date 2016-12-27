@@ -1,4 +1,4 @@
-# Ember Routable Modal
+# Ember Routable Modal [![Build Status](https://travis-ci.org/dbbk/ember-routable-modal.svg?branch=master)](https://travis-ci.org/dbbk/ember-routable-modal)
 The `ember-routable-modal` addon allows you to quickly and easily implement URL-first modals, similar to those found on sites such as Facebook, Twitter, and Dribbble. You can navigate to modals elsewhere in the route tree without losing your place on the current page, making it ideal for lightboxes and photo viewers.
 
 ## Usage
