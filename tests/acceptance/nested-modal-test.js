@@ -13,11 +13,11 @@ test('transitioning to /nested-one', function(assert) {
 
     andThen(function() {
         assert.equal(currentURL(), '/');
-        visit('/nested-one');
+        visit('/test/nested-one');
     });
 
     andThen(function() {
-        assert.equal(currentURL(), '/nested-one');
+        assert.equal(currentURL(), '/test/nested-one');
         findWithAssert(joinClasses(config.modalClassNames));
         findWithAssert('#application-title');
         findWithAssert('#index-title');
@@ -32,11 +32,11 @@ test('transitioning to /nested-one', function(assert) {
     });
 });
 
-test('booting up from /nested-one', function(assert) {
-    visit('/nested-one');
+test('booting up from /test/nested-one', function(assert) {
+    visit('/test/nested-one');
 
     andThen(function() {
-        assert.equal(currentURL(), '/nested-one');
+        assert.equal(currentURL(), '/test/nested-one');
         findWithAssert(joinClasses(config.modalClassNames));
         findWithAssert('#application-title');
         findWithAssert('#index-title');

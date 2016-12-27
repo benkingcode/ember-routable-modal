@@ -1,10 +1,21 @@
 import Ember from 'ember';
 
+function objectValues(obj) {
+    const vals = [];
+
+	for (var key in obj) {
+        vals.push(obj[key]);
+    }
+
+    return vals;
+}
+
 function getURL(routing, transition) {
     let params = [];
+
     if (transition.params) {
-        params = Object.values(transition.params).filter(param => {
-          return Object.values(param).length;
+        params = objectValues(transition.params).filter(param => {
+          return objectValues(param).length;
         });
     }
 
