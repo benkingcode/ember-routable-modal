@@ -59,7 +59,7 @@ export default Ember.Mixin.create({
     },
     actions: {
         closeModal() {
-            return true;
+            this.get('current').close();
         },
         loading(transition, originRoute) {
             const templateName = `${originRoute.routeName}-loading`;
