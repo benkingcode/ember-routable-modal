@@ -63,6 +63,11 @@ export default Ember.Mixin.create({
         },
         loading(transition, originRoute) {
             const templateName = `${originRoute.routeName}-loading`;
+            const lookupTemplate = Ember.getOwner(this).lookup(`template:${templateName}`);
+
+            if (!lookupTemplate) {
+                return false;
+            }
 
             const oldTemplateName = this.templateName;
             const oldControllerName = this.controllerName;
@@ -85,6 +90,8 @@ export default Ember.Mixin.create({
 
             this.templateName = oldTemplateName;
             this.controllerName = oldControllerName;
+
+            return false;
         }
     }
 });
