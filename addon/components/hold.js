@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import Config from '../configuration';
 
 export default Ember.Component.extend({
     current: Ember.inject.service('current-routed-modal'),
-    classNames: ['modal', 'fade', 'in'],
+    classNames: Config.modalClassNames,
     style: 'display: block; padding-left: 0px;',
     tabindex: '-1',
     role: 'dialog',

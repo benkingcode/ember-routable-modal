@@ -1,14 +1,11 @@
 import Ember from 'ember';
+import Config from 'ember-routable-modal/configuration';
 
 export default Ember.Service.extend({
     routing: Ember.inject.service('-routing'),
     routeName: null,
     activeListener: function() {
-        if (this.get('routeName')) {
-            document.body.classList.add('modal-open');
-        } else {
-            document.body.classList.remove('modal-open');
-        }
+        document.body.classList[this.get('routeName') ? 'add' : 'remove'](Config.modalOpenBodyClassName);
     }.observes('routeName'),
     init() {
         this._super(...arguments);
@@ -18,6 +15,9 @@ export default Ember.Service.extend({
                 this.set('routeName', null);
             }
         });
+    },
+    clear() {
+        this.set('routeName', null);
     },
     close() {
         console.log('Close modal from service');
