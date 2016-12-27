@@ -2,7 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 import config from 'ember-routable-modal/configuration';
 
-moduleForAcceptance('Acceptance | nested modals');
+moduleForAcceptance('Acceptance | modals with async models and loading substates');
 
 function joinClasses(classes) {
     return `.${classes.join('.')}`;
