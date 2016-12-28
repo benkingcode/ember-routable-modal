@@ -20,8 +20,6 @@ export default Ember.Service.extend({
         this.set('routeName', null);
     },
     close() {
-        console.log('Close modal from service');
-
         const rout = this.get('routing.router.router');
         const handlerInfos = this.get('routing.router.router.state.handlerInfos');
         const currentController = handlerInfos[handlerInfos.length - 1]._handler.controller;
