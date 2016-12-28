@@ -8,6 +8,8 @@ ember install ember-routable-modal
 ```
 Ember.js 2.8+ is required.
 
+You must add `{{routable-modal-outlet}}` to the bottom of your application template in order for modals to render.
+
 ### Stylesheets
 The addon comes with a lightweight default Sass stylesheet. To use it, you must first install [ember-cli-sass](https://emberobserver.com/addons/ember-cli-sass), then import the files at the top of your `styles/app.scss` file as so;
 
