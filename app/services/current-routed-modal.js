@@ -21,7 +21,9 @@ export default Ember.Service.extend({
         }
     },
     clear() {
-        this.set('routeName', null);
+        if (this.get('routeName')) {
+            this.set('routeName', null);
+        }
     },
     close() {
         const rout = this.get('routing.router.router');
