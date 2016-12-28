@@ -9,11 +9,13 @@ export default Ember.Component.extend({
     role: 'dialog',
     attributeBindings: ['style', 'tabindex', 'role'],
     click(event) {
-        const target = event.target;
-        const thisEl = this.$()[0];
+        if (typeof this.$ !== 'undefined') {
+            const target = event.target;
+            const thisEl = this.$()[0];
 
-        if (target === thisEl || this.$(target).parent()[0] === thisEl) {
-            this.get('current').close();
+            if (target === thisEl || this.$(target).parent()[0] === thisEl) {
+                this.get('current').close();
+            }
         }
     }
 });
