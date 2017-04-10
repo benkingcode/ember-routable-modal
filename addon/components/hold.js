@@ -4,7 +4,7 @@ import Config from '../configuration';
 export default Ember.Component.extend({
     current: Ember.inject.service('current-routed-modal'),
     classNames: Config.modalClassNames,
-    style: 'display: block; padding-left: 0px;',
+    style: Ember.String.htmlSafe('display: block; padding-left: 0px;'),
     tabindex: '-1',
     role: 'dialog',
     attributeBindings: ['style', 'tabindex', 'role'],
