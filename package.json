@@ -1,6 +1,6 @@
 {
   "name": "ember-routable-modal",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "An ember-cli addon for implementing URL-first modals.",
   "keywords": [
     "dialog",
