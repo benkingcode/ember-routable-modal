@@ -23,7 +23,6 @@ function getURL(routing, transition) {
 }
 
 export default Ember.Mixin.create({
-    router: Ember.inject.service(),
     routing: Ember.inject.service('-routing'),
     current: Ember.inject.service('current-routed-modal'),
     setupController(controller, model) {
@@ -57,7 +56,10 @@ export default Ember.Mixin.create({
         if (!initial) {
             const url = getURL(this.get('routing'), transition);
 
-            if (this.get('router.currentRouteName') === transition.targetName) {
+            const routerMain = Ember.getOwner(this).lookup('router:main');
+            const routerLib = routerMain._routerMicrolib || routerMain.router;
+
+            if (routerLib.currentRouteName === transition.targetName) {
                 // Started on modal route
             } else {
                 // this.connections must be merged with application connections
