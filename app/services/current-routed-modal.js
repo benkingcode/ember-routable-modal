@@ -14,7 +14,7 @@ export default Ember.Service.extend({
 
         if (typeof Ember.$ !== 'undefined' && typeof window !== 'undefined') {
             Ember.$(window).on('popstate.ember-routable-modal', () => {
-                if (this.get('routeName')) {
+                if (this.get('routeName') !== this.get('routing.router.currentRouteName')) {
                     this.set('routeName', null);
                 }
             });
