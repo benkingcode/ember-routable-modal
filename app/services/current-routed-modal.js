@@ -38,7 +38,7 @@ export default Ember.Service.extend({
 
             routerLib.transitionTo(parentRoute);
         } else {
-            const url = this.get('routing').generateURL(this.get('routing.currentRouteName'));
+            const url = this.get('routing').generateURL(this.get('routing.currentRouteName'), currentController.get('model'));
 
             routerLib.updateURL(url);
         }
