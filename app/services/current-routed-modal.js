@@ -29,8 +29,12 @@ export default Ember.Service.extend({
         const routerMain = this.get('routing.router');
         const routerLib = routerMain._routerMicrolib || routerMain.router;
         const handlerInfos = routerLib.state.handlerInfos;
-        const currentController = handlerInfos[handlerInfos.length - 1]._handler.controller;
-
+        const currentHandlerInfos = handlerInfos[handlerInfos.length - 1];
+        const currentHandler = currentHandlerInfos._handler;
+        const currentController = currentHandler.controller;
+        const currentModel = currentHandler.currentModel;
+        const hasDynamicSegments = currentHandlerInfos.params.length > 0;
+        
         this.set('routeName', null);
 
         if (currentController._isModalRoute) {
@@ -38,7 +42,13 @@ export default Ember.Service.extend({
 
             routerLib.transitionTo(parentRoute);
         } else {
-            const url = this.get('routing').generateURL(this.get('routing.currentRouteName'));
+            let url;
+
+            if (hasDynamicSegments) {
+              url = this.get('routing').generateURL(this.get('routing.currentRouteName'), currentModel);
+            } else {
+              url = this.get('routing').generateURL(this.get('routing.currentRouteName'), []);
+            }
 
             routerLib.updateURL(url);
         }
