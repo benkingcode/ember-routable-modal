@@ -1,19 +1,20 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Service, { inject as service } from '@ember/service';
 import Config from 'ember-routable-modal/configuration';
 
-export default Ember.Service.extend({
-    routing: Ember.inject.service('-routing'),
+export default Service.extend({
+    routing: service('-routing'),
     routeName: null,
     activeListener: function() {
-        if (typeof Ember.$ !== 'undefined') {
-            Ember.$('body')[this.get('routeName') ? 'addClass' : 'removeClass'](Config.modalOpenBodyClassName);
+        if (typeof $ !== 'undefined') {
+            $('body')[this.get('routeName') ? 'addClass' : 'removeClass'](Config.modalOpenBodyClassName);
         }
     }.observes('routeName'),
     init() {
         this._super(...arguments);
 
-        if (typeof Ember.$ !== 'undefined' && typeof window !== 'undefined') {
-            Ember.$(window).on('popstate.ember-routable-modal', () => {
+        if (typeof $ !== 'undefined' && typeof window !== 'undefined') {
+            $(window).on('popstate.ember-routable-modal', () => {
                 if (this.get('routeName') !== this.get('routing.router.currentRouteName')) {
                     this.set('routeName', null);
                 }

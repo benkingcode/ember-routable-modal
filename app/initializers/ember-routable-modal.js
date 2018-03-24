@@ -1,6 +1,7 @@
+import { inject as service } from '@ember/service';
+import EmberRouter from '@ember/routing/router';
 import ENV from '../config/environment';
 import Configuration from 'ember-routable-modal/configuration';
-import Ember from 'ember';
 
 export default {
     name: 'ember-routable-modal',
@@ -8,8 +9,8 @@ export default {
         const config = ENV['ember-routable-modal'] || {};
         Configuration.load(config);
 
-        Ember.Router.reopen({
-            currentRoutedModalService: Ember.inject.service('current-routed-modal'),
+        EmberRouter.reopen({
+            currentRoutedModalService: service('current-routed-modal'),
             currentRoutedModalWillTransition: function() {
                 this.get('currentRoutedModalService').clear();
             }.on('willTransition')

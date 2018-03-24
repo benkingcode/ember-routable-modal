@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
 
 function objectValues(obj) {
     const vals = [];
@@ -22,9 +24,9 @@ function getURL(routing, transition) {
     return routing.generateURL(transition.targetName, params, transition.queryParams);
 }
 
-export default Ember.Mixin.create({
-    routing: Ember.inject.service('-routing'),
-    current: Ember.inject.service('current-routed-modal'),
+export default Mixin.create({
+    routing: service('-routing'),
+    current: service('current-routed-modal'),
     setupController(controller, model) {
         this._super(controller, model);
         controller.set('_isModalRoute', true);
@@ -56,7 +58,7 @@ export default Ember.Mixin.create({
         if (!initial) {
             const url = getURL(this.get('routing'), transition);
 
-            const routerMain = Ember.getOwner(this).lookup('router:main');
+            const routerMain = getOwner(this).lookup('router:main');
             const routerLib = routerMain._routerMicrolib || routerMain.router;
 
             if (routerLib.currentRouteName === transition.targetName) {
@@ -65,7 +67,7 @@ export default Ember.Mixin.create({
                 // this.connections must be merged with application connections
                 this.enter();
                 this.setup(model, transition);
-                Ember.getOwner(this).lookup('route:application').connections = Ember.getOwner(this).lookup('route:application').connections.concat(this.connections);
+                getOwner(this).lookup('route:application').connections = getOwner(this).lookup('route:application').connections.concat(this.connections);
 
                 transition.abort();
             }
@@ -79,7 +81,7 @@ export default Ember.Mixin.create({
         },
         loading(transition, originRoute) {
             const templateName = `${originRoute.routeName}-loading`;
-            const lookupTemplate = Ember.getOwner(this).lookup(`template:${templateName}`);
+            const lookupTemplate = getOwner(this).lookup(`template:${templateName}`);
 
             if (!lookupTemplate) {
                 return false;
@@ -98,11 +100,11 @@ export default Ember.Mixin.create({
                 this.connections = [];
             }
 
-            if (!Ember.getOwner(this).lookup('route:application').connections) {
-                Ember.getOwner(this).lookup('route:application').connections = [];
+            if (!getOwner(this).lookup('route:application').connections) {
+                getOwner(this).lookup('route:application').connections = [];
             }
 
-            Ember.getOwner(this).lookup('route:application').connections = Ember.getOwner(this).lookup('route:application').connections.concat(this.connections);
+            getOwner(this).lookup('route:application').connections = getOwner(this).lookup('route:application').connections.concat(this.connections);
 
             this.templateName = oldTemplateName;
             this.controllerName = oldControllerName;

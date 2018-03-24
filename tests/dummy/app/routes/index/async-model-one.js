@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { Promise as EmberPromise } from 'rsvp';
+import Route from '@ember/routing/route';
 import ModalRouteMixin from 'ember-routable-modal/mixins/route';
 
-export default Ember.Route.extend(ModalRouteMixin, {
+export default Route.extend(ModalRouteMixin, {
     model() {
-        return new Ember.RSVP.Promise((resolve) => {
+        return new EmberPromise((resolve) => {
             setTimeout(() => {
                 resolve('done');
             }, 500);

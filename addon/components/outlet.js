@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-    current: Ember.inject.service('current-routed-modal'),
+export default Component.extend({
+    current: service('current-routed-modal'),
     actions: {
         closeModal() {
             this.get('current').close();

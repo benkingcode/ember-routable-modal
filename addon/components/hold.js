@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { htmlSafe } from '@ember/string';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import Config from '../configuration';
 
-export default Ember.Component.extend({
-    current: Ember.inject.service('current-routed-modal'),
+export default Component.extend({
+    current: service('current-routed-modal'),
     classNames: Config.modalClassNames,
-    style: Ember.String.htmlSafe('display: block; padding-left: 0px;'),
+    style: htmlSafe('display: block; padding-left: 0px;'),
     tabindex: '-1',
     role: 'dialog',
     attributeBindings: ['style', 'tabindex', 'role'],

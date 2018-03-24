@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import ModalRouteMixin from 'ember-routable-modal/mixins/route';
 
-export default Ember.Route.extend(ModalRouteMixin, {
+export default Route.extend(ModalRouteMixin, {
     model() {
         return 'instant';
     }
