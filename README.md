@@ -97,8 +97,8 @@ Property|Default
 `backdropClassNames`|`['routable-modal--backdrop']`
 `modalOpenBodyClassName`|`routable-modal--open`
 
-## Running Tests
+## Running tests
 
-* `ember try:each`
-* `ember test`
-* `ember test --server`
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `npm test` – Runs `ember try:each` to test your addon against multiple Ember versions
