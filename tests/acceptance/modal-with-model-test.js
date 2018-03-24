@@ -1,54 +1,48 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { click, currentURL, find, findAll, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import config from 'ember-routable-modal/configuration';
 
-moduleForAcceptance('Acceptance | modals with synchronous models');
+module('Acceptance | modals with synchronous models', function(hooks) {
+  setupApplicationTest(hooks);
 
-function joinClasses(classes) {
+  function joinClasses(classes) {
     return `.${classes.join('.')}`;
-}
+  }
 
-test('transitioning to /model-one', function(assert) {
-    visit('/');
+  test('transitioning to /model-one', async function(assert) {
+    await visit('/');
 
-    andThen(function() {
-        assert.equal(currentURL(), '/');
-        visit('/model-one');
-    });
+    assert.equal(currentURL(), '/');
+    try {
+      await visit('/model-one');
+    } catch (e) {
+      // Caught TransitionAborted
+    }
+    assert.equal(currentURL(), '/model-one');
+    assert.ok(findAll(joinClasses(config.modalClassNames)));
+    assert.ok(find('#application-title'));
+    assert.ok(find('#index-title'));
+    assert.equal(find('#modal-model').textContent, 'instant');
 
-    andThen(function() {
-        assert.equal(currentURL(), '/model-one');
-        findWithAssert(joinClasses(config.modalClassNames));
-        findWithAssert('#application-title');
-        findWithAssert('#index-title');
-        assert.equal(find('#modal-model').text(), 'instant');
+    await click('.routable-modal--close');
+    assert.equal(currentURL(), '/');
+    assert.ok(find('#application-title'));
+    assert.ok(find('#index-title'));
+  });
 
-        click('.routable-modal--close');
-    });
+  test('booting up from /model-one', async function(assert) {
+    await visit('/model-one');
 
-    andThen(function() {
-        assert.equal(currentURL(), '/');
-        findWithAssert('#application-title');
-        findWithAssert('#index-title');
-    });
-});
+    assert.equal(currentURL(), '/model-one');
+    assert.ok(findAll(joinClasses(config.modalClassNames)));
+    assert.ok(find('#application-title'));
+    assert.ok(find('#index-title'));
+    assert.equal(find('#modal-model').textContent, 'instant');
 
-test('booting up from /model-one', function(assert) {
-    visit('/model-one');
-
-    andThen(function() {
-        assert.equal(currentURL(), '/model-one');
-        findWithAssert(joinClasses(config.modalClassNames));
-        findWithAssert('#application-title');
-        findWithAssert('#index-title');
-        assert.equal(find('#modal-model').text(), 'instant');
-
-        click('.routable-modal--close');
-    });
-
-    andThen(function() {
-        assert.equal(currentURL(), '/');
-        findWithAssert('#application-title');
-        findWithAssert('#index-title');
-    });
+    await click('.routable-modal--close');
+    assert.equal(currentURL(), '/');
+    assert.ok(find('#application-title'));
+    assert.ok(find('#index-title'));
+  });
 });

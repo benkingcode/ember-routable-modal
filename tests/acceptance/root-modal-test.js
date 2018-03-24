@@ -1,48 +1,42 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { click, currentURL, visit, find, findAll } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import config from 'ember-routable-modal/configuration';
 
-moduleForAcceptance('Acceptance | root modals');
+module('Acceptance | root modals', function(hooks) {
+  setupApplicationTest(hooks);
 
-function joinClasses(classes) {
+  function joinClasses(classes) {
     return `.${classes.join('.')}`;
-}
+  }
 
-test('transitioning to /root-one', function(assert) {
-    visit('/');
+  test('transitioning to /root-one', async function(assert) {
+    await visit('/');
 
-    andThen(function() {
-        assert.equal(currentURL(), '/');
-        visit('/root-one');
-    });
+    assert.equal(currentURL(), '/');
+    try {
+      await visit('/root-one');
+    } catch (e) {
+      // Caught TransitionAborted
+    }
+    assert.equal(currentURL(), '/root-one');
+    assert.ok(findAll(joinClasses(config.modalClassNames)));
+    assert.ok(find('#application-title'));
 
-    andThen(function() {
-        assert.equal(currentURL(), '/root-one');
-        findWithAssert(joinClasses(config.modalClassNames));
-        findWithAssert('#application-title');
+    await click('.routable-modal--close');
+    assert.equal(currentURL(), '/');
+    assert.ok(find('#application-title'));
+  });
 
-        click('.routable-modal--close');
-    });
+  test('booting up from /root-one', async function(assert) {
+    await visit('/root-one');
 
-    andThen(function() {
-        assert.equal(currentURL(), '/');
-        findWithAssert('#application-title');
-    });
-});
+    assert.equal(currentURL(), '/root-one');
+    assert.ok(findAll(joinClasses(config.modalClassNames)));
+    assert.ok(find('#application-title'));
 
-test('booting up from /root-one', function(assert) {
-    visit('/root-one');
-
-    andThen(function() {
-        assert.equal(currentURL(), '/root-one');
-        findWithAssert(joinClasses(config.modalClassNames));
-        findWithAssert('#application-title');
-
-        click('.routable-modal--close');
-    });
-
-    andThen(function() {
-        assert.equal(currentURL(), '/');
-        findWithAssert('#application-title');
-    });
+    await click('.routable-modal--close');
+    assert.equal(currentURL(), '/');
+    assert.ok(find('#application-title'));
+  });
 });
