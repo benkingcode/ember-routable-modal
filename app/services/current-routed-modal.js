@@ -5,6 +5,7 @@ import Config from 'ember-routable-modal/configuration';
 
 export default Service.extend({
     routing: service('-routing'),
+    router: service(),
     routeName: null,
     activeListener: observer('routeName', function() {
         if (typeof $ !== 'undefined') {
@@ -40,7 +41,7 @@ export default Service.extend({
 
             routerLib.transitionTo(parentRoute);
         } else {
-            const url = this.get('routing').generateURL(this.get('routing.currentRouteName'));
+            const url = this.get('router').urlFor(this.get('router.currentRouteName'))
 
             routerLib.updateURL(url);
         }

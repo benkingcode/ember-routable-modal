@@ -2392,7 +2392,7 @@ ember-ajax@^3.0.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
   version "6.12.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.12.0.tgz#3adcdbe1278da1fcd0b9038f1360cb4ac5d4414c"
   dependencies:
@@ -2736,6 +2736,12 @@ ember-router-generator@^1.2.3:
   resolved "https://registry.yarnpkg.com/ember-router-generator/-/ember-router-generator-1.2.3.tgz#8ed2ca86ff323363120fc14278191e9e8f1315ee"
   dependencies:
     recast "^0.11.3"
+
+ember-router-service-polyfill@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ember-router-service-polyfill/-/ember-router-service-polyfill-1.0.2.tgz#6e5565f196fa7045cbe06a6fab861f9e766fe62a"
+  dependencies:
+    ember-cli-babel "^6.8.2"
 
 ember-source-channel-url@^1.0.1:
   version "1.0.1"
