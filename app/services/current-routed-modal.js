@@ -1,15 +1,16 @@
 import $ from 'jquery';
 import Service, { inject as service } from '@ember/service';
+import { observer } from '@ember/object';
 import Config from 'ember-routable-modal/configuration';
 
 export default Service.extend({
     routing: service('-routing'),
     routeName: null,
-    activeListener: function() {
+    activeListener: observer('routeName', function() {
         if (typeof $ !== 'undefined') {
             $('body')[this.get('routeName') ? 'addClass' : 'removeClass'](Config.modalOpenBodyClassName);
         }
-    }.observes('routeName'),
+    }),
     init() {
         this._super(...arguments);
 
