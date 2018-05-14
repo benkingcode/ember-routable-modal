@@ -1,4 +1,4 @@
-import { click, currentURL, find, findAll, visit } from '@ember/test-helpers';
+import { click, currentURL, find, findAll, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import config from 'ember-routable-modal/configuration';
@@ -25,6 +25,7 @@ module('Acceptance | modals with async models and loading substates', function(
     assert.ok(findAll(joinClasses(config.modalClassNames)));
     assert.ok(find('#application-title'));
     assert.ok(find('#index-title'));
+    await waitFor('#modal-model');
     assert.equal(find('#modal-model').textContent, 'done');
 
     await click('.routable-modal--close');
@@ -40,6 +41,8 @@ module('Acceptance | modals with async models and loading substates', function(
     assert.ok(findAll(joinClasses(config.modalClassNames)));
     assert.ok(find('#application-title'));
     assert.ok(find('#index-title'));
+
+    await waitFor('#modal-model');
     assert.equal(find('#modal-model').textContent, 'done');
 
     await click('.routable-modal--close');
