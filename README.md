@@ -6,7 +6,7 @@ The `ember-routable-modal` addon allows you to quickly and easily implement URL-
 ```no-highlight
 ember install ember-routable-modal
 ```
-Ember.js 2.8+ is required.
+Ember.js 2.12+ is required.
 
 You must add `{{routable-modal-outlet}}` to the bottom of your application template in order for modals to render.
 
