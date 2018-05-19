@@ -2,6 +2,7 @@ import { click, currentURL, find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import config from 'ember-routable-modal/configuration';
+import {waitFor} from "@ember/test-helpers/index";
 
 module('Acceptance | modals with async models', function(hooks) {
   setupApplicationTest(hooks);
@@ -23,6 +24,8 @@ module('Acceptance | modals with async models', function(hooks) {
     assert.ok(findAll(joinClasses(config.modalClassNames)));
     assert.ok(find('#application-title'));
     assert.ok(find('#index-title'));
+
+    await waitFor('#modal-model');
     assert.equal(find('#modal-model').textContent, 'done');
 
     await click('.routable-modal--close');
@@ -38,6 +41,8 @@ module('Acceptance | modals with async models', function(hooks) {
     assert.ok(findAll(joinClasses(config.modalClassNames)));
     assert.ok(find('#application-title'));
     assert.ok(find('#index-title'));
+
+    await waitFor('#modal-model');
     assert.equal(find('#modal-model').textContent, 'done');
 
     await click('.routable-modal--close');

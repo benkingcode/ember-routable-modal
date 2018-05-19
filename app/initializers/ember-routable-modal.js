@@ -12,7 +12,7 @@ export default {
         EmberRouter.reopen({
             currentRoutedModalService: service('current-routed-modal'),
             willTransition() {
-                this._super();
+                this._super(...arguments);
                 this.get('currentRoutedModalService').clear();
             }
         });
