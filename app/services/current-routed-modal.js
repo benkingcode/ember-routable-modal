@@ -2,6 +2,11 @@ import $ from 'jquery';
 import Service, { inject as service } from '@ember/service';
 import { observer } from '@ember/object';
 import Config from 'ember-routable-modal/configuration';
+import Ember from 'ember';
+
+const {
+  testing
+} = Ember;
 
 export default Service.extend({
     routing: service('-routing'),
@@ -9,11 +14,13 @@ export default Service.extend({
     routeName: null,
     activeListener: observer('routeName', function() {
         if (typeof $ !== 'undefined') {
-            $('body')[this.get('routeName') ? 'addClass' : 'removeClass'](Config.modalOpenBodyClassName);
+            $(this.get('appContainer'))[this.get('routeName') ? 'addClass' : 'removeClass'](Config.modalOpenBodyClassName);
         }
     }),
     init() {
         this._super(...arguments);
+
+        this.appContainer = testing ? '#ember-testing' : 'body';
 
         if (typeof $ !== 'undefined' && typeof window !== 'undefined') {
             $(window).on('popstate.ember-routable-modal', () => {
@@ -21,6 +28,12 @@ export default Service.extend({
                     this.set('routeName', null);
                 }
             });
+        }
+    },
+    willDestroy() {
+        $(this.get('appContainer')).removeClass(Config.modalOpenBodyClassName);
+        if (typeof $ !== 'undefined' && typeof window !== 'undefined') {
+          $(window).off('popstate.ember-routable-modal');
         }
     },
     clear() {
